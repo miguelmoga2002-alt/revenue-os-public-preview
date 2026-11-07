@@ -1,0 +1,3 @@
+Person ID,Name,Email,Phone,Organization ID,Owner,Lead source
+p-1,Contacto A,carlos@example.com,+34000000001,org-101,Rep A,Inbound
+p-2,Contacto B,emma@example.com,+34000000002,org-102,Rep B,Outbound

@@ -1,0 +1,300 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Revenue OS · Focus</title><style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:#141920;background:#f7f8fa}*{box-sizing:border-box}body{margin:0}header{background:white;height:68px;border-bottom:1px solid #e7eaef;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1020px)/2))}header b{letter-spacing:-1px}main{max-width:1020px;margin:55px auto;padding:0 24px}h1{font-size:33px;letter-spacing:-1.5px;font-weight:650;margin:0}p{color:#526071;line-height:1.6}.card{background:#fff;border:1px solid #e5e9ee;border-radius:17px;padding:28px;margin-top:25px}.muted{color:#526071;font-size:12px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.8px;color:#526071;font-weight:750}.tasktitle{font-size:29px;letter-spacing:-1px;margin:8px 0 20px}.btn{background:#fff;border:1px solid #dce2e8;border-radius:9px;padding:12px 16px;font:600 13px inherit;cursor:pointer}.btn.primary{background:#2048c9;color:#fff;border-color:#2048c9}.btn:disabled{opacity:.5;cursor:default}.pill{display:inline-block;border:1px solid #e3e8ef;padding:7px 10px;border-radius:8px;font-size:12px;margin:0 6px 9px 0;color:#535e6e}input,select,textarea{width:100%;padding:12px;border:1px solid #dce2e9;border-radius:9px;margin:8px 0 16px;background:white;font:inherit}label{display:block;font-size:12px;font-weight:600;margin-top:8px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.note{background:#f6f8fb;border-radius:10px;padding:16px;color:#4b5563;font-size:13px;line-height:1.7}.error{padding:12px;background:#fff1ee;color:#b42318;border-radius:9px;margin-top:12px;font-size:13px}.success{padding:12px;background:#ecf8f1;color:#147345;border-radius:9px;margin-top:12px;font-size:13px}[hidden]{display:none!important}@media(max-width:650px){.grid{grid-template-columns:1fr}main{margin:28px auto}.card{padding:18px}h1{font-size:27px}}
+
+.workspace-detail{position:fixed!important;inset:0;z-index:20;max-width:none!important;width:100%;height:100dvh;overflow:auto;margin:0!important;padding:26px clamp(16px,4vw,70px)!important;background:#f6f8fb!important;border:0!important;border-radius:0!important}
+.workspace-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;position:sticky;top:-26px;background:#f6f8fb;padding:12px 0;z-index:2}
+.workspace-columns{display:grid;grid-template-columns:minmax(280px,1fr) minmax(340px,1.2fr);gap:20px;max-width:1400px;margin:20px auto}
+.workspace-columns>div{min-width:0;background:#fff;border:1px solid #e5e9ee;border-radius:14px;padding:24px}
+.timeline-list{list-style:none;padding:0}
+.timeline-list li{border-left:2px solid #dbe5f2;padding:0 0 18px 18px;margin-left:8px;overflow-wrap:anywhere}
+.timeline-list strong,.timeline-list small{display:block}
+.timeline-list small{font-size:11px;color:#5b6574}
+.timeline-list p{white-space:pre-wrap}
+@media(max-width:830px){.workspace-columns{display:block}.workspace-columns>div{margin-bottom:16px}}
+
+.deal-ref{overflow-wrap:anywhere;padding:10px;background:#f0f4fb;border-radius:8px}
+.workspace-header a{font-size:13px;color:#2048c9}
+#copyDealStatus{font-size:12px;color:#226c3f}
+.scheduled-card{border-left:5px solid #6484bc;background:#f9fbff}
+.scheduled-list{padding:0;list-style:none}
+.scheduled-list li{background:#fff;border:1px solid #dce5f1;border-radius:10px;padding:14px;margin:10px 0}
+.scheduled-list strong,.scheduled-list small{display:block}
+.scheduled-list small{color:#45546b;margin:5px 0 9px}
+.scheduled-list button{padding:8px 12px}
+.timeline-label{display:inline-block;font-size:11px;font-weight:750;letter-spacing:.3px;background:#edf1f8;color:#293c58;border:1px solid #d8e0eb;border-radius:7px;padding:3px 9px;margin:0 0 7px}
+.event-task .timeline-label{background:#e8f2ff;color:#174c84;border-color:#b8d5fa}
+.event-reschedule .timeline-label{background:#fff2d9;color:#775000;border-color:#ead49e}
+.event-result .timeline-label{background:#e8f7ed;color:#226c3f;border-color:#b3dec1}
+</style></head><body><header><div><span style="background:#151a23;color:white;border-radius:8px;padding:9px 11px;margin-right:9px">R</span><b>revenueOS</b><small style="margin-left:14px;color:#526071">/ Focus</small></div><small id="who">Guía de ejecución</small></header><main><div id="login"><h1>Una acción. Sin ruido.</h1><p>Tu empresa define el proceso. Revenue OS organiza el trabajo pendiente y presenta la siguiente acción cuando corresponde.</p><div class="card" style="max-width:430px"><h3>Iniciar sesión</h3><label>Usuario<input id="username" autocomplete="username"></label><label>Contraseña<input id="password" type="password" autocomplete="current-password"></label><label>Código MFA (administradores)<input id="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6 dígitos si se requiere"></label><button id="signin" class="btn primary">Entrar</button><div id="loginmessage"></div></div></div><div id="app" hidden><span class="eyebrow">TRABAJO GUIADO</span><h1>Tu siguiente acción.</h1><p id="description">Consulta el trabajo pendiente de acuerdo con la política de tu empresa.</p><div id="task" class="card"><span class="eyebrow">CARGANDO TAREA</span></div><section class="card" id="queued" aria-labelledby="queuedHeading" hidden><span class="eyebrow">TAREAS YA DISPONIBLES · EN COLA</span><h2 id="queuedHeading">Otras tareas pendientes <span class="muted" id="queuedCount"></span></h2><p>Estas tareas están asignadas a ti y ya han llegado a su fecha. Solo puedes iniciar la acción prioritaria que aparece arriba; esta lista es informativa.</p><ul class="scheduled-list" id="queuedList"></ul></section><section class="card scheduled-card" id="upcoming" aria-labelledby="upcomingHeading" hidden><span class="eyebrow">TAREAS PROGRAMADAS · NO EJECUTADAS</span><h2 id="upcomingHeading">Próximas tareas <span id="upcomingCount" class="muted"></span></h2><p>Ya están asignadas a tu usuario. Se convertirán en acciones disponibles cuando llegue su fecha; no se han ejecutado llamadas, correos ni reuniones.</p><ul id="upcomingList" class="scheduled-list"></ul></section><div class="card" id="outcome" hidden><h3>Registrar resultado</h3><p>Para avanzar debes dejar el resultado y, si corresponde, el siguiente compromiso.</p><label>Resultado<select id="result"><option value="contacted">Cliente contactado</option><option value="no_answer">No contesta</option><option value="meeting_set">Reunión agendada</option><option value="replied">Respuesta enviada</option><option value="done">Tarea cerrada</option><option value="blocked">Bloqueada / requiere manager</option></select></label><label>Notas<textarea id="note" rows="2" placeholder="Datos comerciales nuevos... (opcional)"></textarea></label><div class="grid"><label>Próximo paso<input id="next" placeholder="Enviar propuesta"></label><label>Fecha y hora<input id="due" type="datetime-local"></label></div><button id="finish" class="btn primary">Guardar resultado y continuar</button><div id="finishmessage"></div></div><div id="context" class="card" role="dialog" aria-modal="true" aria-labelledby="contextHeading" hidden></div><div id="message"></div><button id="exit" class="btn" style="margin-top:20px">Cerrar sesión</button><div id="logoutError" role="alert" style="color:#b42318;margin-top:8px" hidden></div></div></main><script>
+let token='',active=null,selected=null;const $=id=>document.getElementById(id);const focusRecordFromUrl=()=>new URLSearchParams(location.search).get('record');const canonicalDealHref=id=>'/deals/'+encodeURIComponent(id);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;',"'":'&#39;'}[c]));async function api(path,method='GET',data){let r=await fetch('/api/v1'+path,{method,headers:{'Authorization':'Bearer '+token,...(data?{'Content-Type':'application/json'}:{})},body:data?JSON.stringify(data):undefined});let out=await r.json();if(!r.ok)throw Error(typeof out.detail==='string'?out.detail:JSON.stringify(out.detail));return out}function msg(id,text,ok=false){$(id).innerHTML='<div class="'+(ok?'success':'error')+'">'+esc(text)+'</div>'}
+$('signin').onclick=async()=>{try{let r=await fetch('/api/v1/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:$('username').value,password:$('password').value,...($('otp').value.trim()?{otp:$('otp').value.trim()}:{})})});let d=await r.json();if(!r.ok)throw Error(r.status===429?'Demasiados intentos; vuelve más tarde':r.status===403?'MFA de administrador pendiente de aprovisionar':'Credenciales o código MFA inválidos');token=d.access_token;$('who').textContent=d.role+' · '+d.tenant;$('login').hidden=true;$('app').hidden=false;if(d.role!=='rep'){$('task').innerHTML='<span class="eyebrow">ACCESO ADMINISTRATIVO</span><h2>Focus muestra tareas del comercial, no del administrador</h2><p>Para comprobar una asignación, cierra sesión y entra con el usuario comercial seleccionado en el Deal Workspace.</p>';$('upcoming').hidden=true;$('queued').hidden=true;$('outcome').hidden=true;return}await refresh();const requested=focusRecordFromUrl();if(requested)await showContext(requested,false)}catch(e){msg('loginmessage',e.message)}};
+function evidenceMarkup(t){
+ const entries=(t.evidence||[]).map(e=>'<li><b>'+esc(e.rule==='due_window'?'Fecha de compromiso':'Clasificación asignada')+'</b>: '+esc(e.value)+' · +'+esc(e.points)+' puntos <small>('+esc(e.origin)+'.'+esc(e.field)+' · registrado '+esc(new Date(e.recorded_at).toLocaleString('es-ES'))+')</small><div>'+esc(e.explanation)+'</div></li>').join('');
+ const breakdown=t.score_breakdown||{};
+ return '<div class="note" id="actionEvidence"><b>Datos de la recomendación</b><p>Regla determinista, política revisión '+esc(t.policy_revision)+'. Evaluación: '+esc(new Date(t.evaluated_at).toLocaleString('es-ES'))+'.</p><ul>'+entries+'</ul><p>Desglose: base '+esc(breakdown.base)+' + vencimiento '+esc(breakdown.overdue)+' + clasificación '+esc(breakdown.declared_priority)+' = '+esc(t.score)+'.</p><p>Información procedente de tareas asignadas; no se han verificado señales externas de email, llamadas o CRM.</p></div>';
+}
+function render(t,isactive){selected=t;active=isactive?t.id:null;$('task').innerHTML=`<span class="eyebrow">${isactive?'ACCIÓN EN CURSO':'SIGUIENTE ACCIÓN DISPONIBLE'}</span><div class="tasktitle">${esc(t.title)}</div><span class="pill">${esc(t.channel)}</span><span class="pill">Score ${esc(t.score)}</span><span class="pill">${esc(new Date(t.due_at).toLocaleString('es-ES'))}</span><div class="note"><b>Por qué corresponde ahora</b><div>${t.reasons.map(esc).join(' · ')}</div></div>${evidenceMarkup(t)}<div style="margin-top:22px">${isactive?'Completa el resultado para continuar.':'<button id="claim" class="btn primary">Iniciar esta acción</button>'}</div>`;$('outcome').hidden=!isactive;$('context').hidden=true;if(!isactive)$('claim').onclick=claim;if(t.record_id){const link=document.createElement('button');link.className='btn';link.textContent='Ver Account 360';link.dataset.openWorkspace='1';link.style.marginLeft='12px';link.onclick=()=>showContext(t.record_id);$('task').appendChild(link)}}
+function renderQueued(items,truncated,selectedId){
+ const panel=$('queued'),list=$('queuedList');
+ list.replaceChildren();
+ const other=items.filter(item=>item.id!==selectedId);
+ panel.hidden=!other.length;
+ $('queuedCount').textContent=other.length+(truncated?'+':'');
+ for(const task of other){
+  const li=document.createElement('li'),name=document.createElement('strong'),meta=document.createElement('small');
+  name.textContent=task.title;
+  meta.textContent='Disponible desde '+new Date(task.due_at).toLocaleString('es-ES')+
+   ' · '+task.channel+' · Espera su turno de ejecución';
+  li.append(name,meta);
+  if(task.record_id){
+   const btn=document.createElement('button');
+   btn.type='button';btn.className='btn';btn.textContent='Ver oportunidad';
+   btn.onclick=()=>showContext(task.record_id);
+   li.append(btn);
+  }
+  list.append(li);
+ }
+}
+
+function renderUpcoming(items,truncated){
+ const panel=$('upcoming'),list=$('upcomingList');
+ list.replaceChildren();
+ panel.hidden=!items.length;
+ $('upcomingCount').textContent=items.length+(truncated?'+':'');
+ for(const task of items){
+  const li=document.createElement('li'),name=document.createElement('strong'),meta=document.createElement('small');
+  name.textContent=task.title;
+  meta.textContent='Programada: '+new Date(task.due_at).toLocaleString('es-ES')+
+   ' · '+task.channel+' · Pendiente de ejecución';
+  li.append(name,meta);
+  if(task.record_id){
+   const btn=document.createElement('button');
+   btn.type='button';btn.className='btn';btn.textContent='Ver oportunidad';
+   btn.onclick=()=>showContext(task.record_id);
+   li.append(btn);
+  }
+  list.append(li);
+ }
+}
+
+async function refresh(){try{let q=await api('/work/queue');renderUpcoming(q.upcoming||[],q.upcoming_truncated);renderQueued(q.queued||[],q.queued_truncated,q.active?.id||q.ready[0]?.id);if(q.active){render(q.active,true)}else if(q.ready.length){render(q.ready[0],false)}else{$('task').innerHTML='<span class="eyebrow">TODO AL DÍA</span><h2>Sin acciones ejecutables ahora</h2><p>Si tienes tareas programadas, aparecen abajo con fecha y hora. Se podrán ejecutar cuando llegue su vencimiento. Pulsa actualizar para revisar la cola.</p><button class="btn" id="refresh">Actualizar</button>';$('refresh').onclick=refresh;$('outcome').hidden=true}}catch(e){renderUpcoming([],false);renderQueued([],false,null);msg('message',e.message)}}
+async function renderFocusTimeline(recordId){
+ const list=$('focusTimelineList'),status=$('focusTimelineStatus');
+ if(!list)return;
+ list.replaceChildren();status.textContent="Cargando eventos…";
+ try{
+  const data=await api('/deals/'+encodeURIComponent(recordId)+'/timeline');
+  if(!list.isConnected)return;
+  status.textContent=data.truncated?'Se muestran hasta 100 eventos recientes.':'';
+  for(const item of data.events){
+   const li=document.createElement('li'),head=document.createElement('strong'),meta=document.createElement('small');
+   li.className='event-'+item.kind;
+   const type=document.createElement('span');
+   type.className='timeline-label';
+   type.textContent=({task:'TAREA PROGRAMADA',reschedule:'REPROGRAMACIÓN',result:'RESULTADO REGISTRADO',
+    note:'NOTA',stage:'CAMBIO DE ETAPA',signal:'SEÑAL DECLARADA',
+    imported_activity:'ACTIVIDAD IMPORTADA',created:'OPORTUNIDAD'})[item.kind]||'EVENTO';
+   li.append(type);
+   head.textContent=item.headline;
+   const stamp=new Date(item.at);
+   meta.textContent=(Number.isFinite(stamp.getTime())?stamp.toLocaleString('es-ES'):item.at)+' · '+(item.actor||'Sistema / importación')+' · '+item.source+' · '+item.verification;
+   li.append(head,meta);
+   if(item.body){const p=document.createElement('p');p.textContent=item.body;li.append(p)}
+   list.append(li);
+  }
+ }catch(e){status.textContent='No se pudo cargar la timeline: '+e.message}
+}
+let focusPendingNote=null;
+async function focusNoteKey(recordId,text){
+ const raw=new TextEncoder().encode($('username').value.trim()+':'+recordId+':'+text);
+ const bytes=await crypto.subtle.digest('SHA-256',raw);
+ const hash=Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,'0')).join('');
+ if(!focusPendingNote||focusPendingNote.hash!==hash)focusPendingNote={hash,idem:crypto.randomUUID()};
+ return focusPendingNote.idem;
+}
+
+// Idempotent retry keys are kept in memory only; no commercial data or bearer
+// tokens are written to localStorage/sessionStorage by this workflow.
+let ownTaskPending=null, ownReplanPending=null, ownTaskOptions=[];
+function ownLocalDate(iso){
+ const d=new Date(iso);
+ return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+}
+function ownOperationKey(previous,signature){
+ return previous&&previous.signature===signature?previous:{signature,idem:crypto.randomUUID()};
+}
+async function ownTaskRefresh(recordId){
+ const data=await api('/deals/'+encodeURIComponent(recordId)+'/my-tasks');
+ ownTaskOptions=data.items.filter(x=>x.state==='open');
+ const select=$('ownReplanSelect');
+ if(!select)return;
+ select.replaceChildren();
+ for(const item of ownTaskOptions){
+  const opt=document.createElement('option');
+  opt.value=item.id;
+  opt.textContent=item.title+' · '+new Date(item.due_at).toLocaleString('es-ES');
+  select.append(opt);
+ }
+ $('ownReplanSubmit').disabled=!ownTaskOptions.length;
+ if(ownTaskOptions.length)$('ownReplanDue').value=ownLocalDate(ownTaskOptions[0].due_at);
+ else $('ownReplanDue').value='';
+}
+async function initOwnTasks(recordId){
+ const task=$('ownTaskForm'),resched=$('ownReplanSubmit');
+ await ownTaskRefresh(recordId);
+ $('ownReplanSelect').onchange=()=>{
+  const item=ownTaskOptions.find(x=>x.id===$('ownReplanSelect').value);
+  if(item)$('ownReplanDue').value=ownLocalDate(item.due_at);
+ };
+ task.onsubmit=async e=>{
+  e.preventDefault();if(!task.reportValidity())return;
+  const button=$('ownTaskSubmit'),status=$('ownTaskMessage');
+  button.disabled=true;status.textContent='Creando tarea…';
+  try{
+   const date=new Date($('ownTaskDue').value);
+   if(!Number.isFinite(date.getTime()))throw Error('Indica una fecha válida');
+   const payload={title:$('ownTaskTitle').value.trim(),
+    channel:$('ownTaskChannel').value,due_at:date.toISOString()};
+   ownTaskPending=ownOperationKey(ownTaskPending,JSON.stringify({recordId,...payload}));
+   const result=await api('/deals/'+encodeURIComponent(recordId)+'/my-tasks','POST',
+     {...payload,idem:ownTaskPending.idem});
+   ownTaskPending=null;
+   $('ownTaskTitle').value='';$('ownTaskDue').value='';
+   status.textContent=result.already_recorded?'Tarea ya registrada (reintento seguro).':'Tarea propia programada; visible en el deal y en Próximas tareas de Focus hasta su vencimiento.';
+   await ownTaskRefresh(recordId);await renderFocusTimeline(recordId);
+  }catch(err){status.textContent='No se pudo crear: '+err.message}
+  finally{button.disabled=false}
+ };
+ resched.onclick=async()=>{
+  const item=ownTaskOptions.find(x=>x.id===$('ownReplanSelect').value);
+  const status=$('ownReplanMessage');if(!item){status.textContent='Elige una tarea pendiente.';return}
+  resched.disabled=true;status.textContent='Reprogramando…';
+  try{
+   const date=new Date($('ownReplanDue').value);
+   if(!Number.isFinite(date.getTime()))throw Error('Indica una fecha válida');
+   const payload={expected_due_at:item.due_at,due_at:date.toISOString()};
+   ownReplanPending=ownOperationKey(ownReplanPending,JSON.stringify({recordId,task:item.id,...payload}));
+   const result=await api('/deals/'+encodeURIComponent(recordId)+'/my-tasks/'+encodeURIComponent(item.id),
+     'PATCH',{...payload,idem:ownReplanPending.idem});
+   ownReplanPending=null;
+   status.textContent=result.already_recorded?'Cambio ya registrado.':result.changed?'Tarea reprogramada y auditada.':'No hubo cambios de fecha.';
+   await ownTaskRefresh(recordId);await renderFocusTimeline(recordId);
+  }catch(err){status.textContent='No se pudo reprogramar: '+err.message}
+  finally{resched.disabled=!ownTaskOptions.length}
+ };
+}
+
+function closeFocusWorkspace(updateUrl=true){
+ $('context').hidden=true;
+ $('context').classList.remove('workspace-detail');
+ if(updateUrl&&focusRecordFromUrl())history.replaceState({},'','/focus');
+ const button=$('task').querySelector('[data-open-workspace]');
+ if(button)button.focus();
+ refresh();
+}
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'&&!$('context').hidden){e.preventDefault();closeFocusWorkspace()}
+});
+window.addEventListener('popstate',()=>{if(!token)return;const id=focusRecordFromUrl();if(id)showContext(id,false);else closeFocusWorkspace(false)});
+async function showContext(recordId,updateUrl=true){try{
+ const [d,signals]=await Promise.all([
+   api('/crm/'+encodeURIComponent(recordId)+'/360'),
+   api('/signals/records/'+encodeURIComponent(recordId))
+ ]);
+ const r=d.record,panel=$('context');panel.hidden=false;
+ if(updateUrl){const target='/focus?record='+encodeURIComponent(recordId);if(location.pathname+location.search!==target)history.pushState({record:recordId},'',target)}
+ const safe=esc;
+ const entries=signals.items.map(item=>'<li><b>'+safe(item.kind)+'</b> · '+safe(item.verification==='recorded_action'?'Registrada en Focus':'Declarada por usuario')+' · '+safe(new Date(item.occurred_at).toLocaleString('es-ES'))+' · '+safe(item.status)+(item.detail?' — '+safe(item.detail):'')+(item.status==='current'?' <button type="button" class="btn" data-correct="'+safe(item.id)+'">Corregir</button>':'')+'</li>').join('');
+ panel.innerHTML='<span class="eyebrow">ACCOUNT 360 · DATOS DEL CRM</span><h2>'+safe(r.name)+'</h2><p>'+safe(r.kind)+' · '+safe(r.source)+'</p><p>'+safe(r.email||r.phone||'Sin datos de contacto')+'</p><p>Registros relacionados visibles: '+d.related.length+'</p><div class="note">Próximo compromiso: '+safe(d.next_commitment?d.next_commitment.title:'No hay tareas pendientes')+'</div>'+
+ '<section aria-label="Señales del lead"><h3>Señales comerciales registradas</h3><p>Los registros declarados manualmente no verifican el envío de emails ni la celebración de reuniones.</p><ul id="signalList">'+(entries||'<li>Sin señales registradas.</li>')+'</ul>'+
+ '<div id="signalEdit" class="note"><label>Tipo de evento<select id="signalKind"><option value="proposal_sent">Propuesta enviada (declarado)</option><option value="meeting_held">Reunión celebrada (declarado)</option><option value="no_answer">Llamada sin respuesta (declarado)</option><option value="replied">Respuesta recibida (declarado)</option><option value="contacted">Contacto realizado (declarado)</option></select></label>'+
+ '<label>Fecha del evento<input id="signalWhen" type="datetime-local"></label><label>Detalle breve, sin datos sensibles<input id="signalDetail" maxlength="300"></label>'+
+ '<button id="signalSave" class="btn">Registrar señal declarada</button><div id="signalMessage" aria-live="polite"></div></div></section>';
+ panel.classList.add('workspace-detail');
+ const left=document.createElement('div');
+ while(panel.firstChild)left.append(panel.firstChild);
+ if(r.kind==='deals'){
+  const stage=document.createElement('p');
+  stage.textContent='Etapa del deal: '+(r.stage||'Sin etapa')+' · Importe: '+(r.amount||'Sin importe');
+  const reference=document.createElement('p');reference.className='muted deal-ref';
+  reference.textContent='Referencia interna: '+r.id+(r.external_id?' · Referencia CRM: '+r.source+' / '+r.external_id:'');
+  left.insertBefore(reference,left.firstChild);
+  left.insertBefore(stage,left.firstChild);
+ }
+ const right=document.createElement('div');
+ if(r.kind==='deals'){
+  right.innerHTML='<h3>Timeline de la oportunidad</h3>'+
+   '<p class="muted">Notas y eventos con procedencia verificable. Las llamadas y emails declarados no están integrados ni verificados.</p>'+
+   '<form id="focusNoteForm"><label for="focusNoteText">Nueva nota comercial</label>'+
+   '<textarea id="focusNoteText" maxlength="3000" minlength="2" rows="3" required placeholder="Qué ocurrió y qué debemos hacer ahora"></textarea>'+
+   '<button id="focusSaveNote" class="btn primary" type="submit">Guardar nota</button><div id="focusNoteStatus" role="status"></div></form>'+
+   '<p id="focusTimelineStatus" role="status"></p><ol id="focusTimelineList" class="timeline-list"></ol>'+
+   '<section aria-label="Planificación de tareas propias"><h3>Programar mis tareas</h3><p class="muted">Planificar una tarea no significa haber ejecutado una acción. Solo verás tareas de esta oportunidad con permiso; no se envían comunicaciones.</p>'+
+   '<form id="ownTaskForm"><label for="ownTaskTitle">Tarea a programar</label><input id="ownTaskTitle" required minlength="2" maxlength="300" placeholder="Preparar propuesta" />'+
+   '<label for="ownTaskChannel">Canal</label><select id="ownTaskChannel"><option value="call">Llamada</option><option value="email">Correo</option><option value="meeting">Reunión</option><option value="research">Investigar</option><option value="other">Otro</option></select>'+
+   '<label for="ownTaskDue">Cuándo</label><input id="ownTaskDue" required type="datetime-local" /><button class="btn primary" id="ownTaskSubmit" type="submit">Programar tarea</button></form>'+
+   '<div id="ownTaskMessage" role="status"></div><h3>Reprogramar tarea pendiente</h3><label for="ownReplanSelect">Tarea</label><select id="ownReplanSelect"></select>'+
+   '<label for="ownReplanDue">Nueva fecha</label><input id="ownReplanDue" type="datetime-local" />'+
+   '<button type="button" id="ownReplanSubmit" class="btn">Reprogramar</button><div id="ownReplanMessage" role="status"></div></section>';
+ }else{
+  right.innerHTML='<h3>Ficha del contacto</h3><p>Las notas del deal se guardan dentro de una oportunidad. Para este contacto se muestran las señales registradas en Focus.</p>';
+ }
+ const toolbar=document.createElement('div');toolbar.className='workspace-header';
+ const heading=document.createElement('h1');heading.id='contextHeading';heading.textContent='Espacio comercial · '+r.name;
+ const back=document.createElement('button');back.id='contextBack';back.className='btn';back.textContent='Volver a Focus';
+ toolbar.append(heading);
+ if(r.kind==='deals'){
+  const link=document.createElement('a');link.id='permanentDealUrl';link.href=canonicalDealHref(r.id);link.textContent='Enlace permanente';
+  const copy=document.createElement('button');copy.id='copyDealUrlFocus';copy.type='button';copy.className='btn';copy.textContent='Copiar enlace';
+  const status=document.createElement('span');status.id='copyDealStatus';status.setAttribute('role','status');
+  copy.onclick=async()=>{try{await navigator.clipboard.writeText(location.origin+canonicalDealHref(r.id));status.textContent='Enlace copiado'}catch{status.textContent='Usa Enlace permanente para copiar la dirección'}};
+  toolbar.append(link,copy,status);
+ }
+ toolbar.append(back);
+ const columns=document.createElement('div');columns.className='workspace-columns';columns.append(left,right);
+ panel.append(toolbar,columns);
+ back.onclick=()=>closeFocusWorkspace();back.focus();
+ if(r.kind==='deals'){
+  await renderFocusTimeline(recordId);
+  await initOwnTasks(recordId);
+  $('focusNoteForm').onsubmit=async event=>{
+   event.preventDefault();
+   const text=$('focusNoteText').value.trim(),button=$('focusSaveNote'),status=$('focusNoteStatus');
+   if(text.length<2||text.length>3000){status.textContent='Nota de 2 a 3000 caracteres requerida.';return}
+   button.disabled=true;status.textContent='Guardando…';
+   try{
+    const idem=await focusNoteKey(recordId,text);
+    const result=await api('/deals/'+encodeURIComponent(recordId)+'/notes','POST',{text,idem});
+    focusPendingNote=null;
+    $('focusNoteText').value='';
+    status.textContent=result.already_recorded?'Nota ya registrada (reintento seguro).':'Nota guardada y auditada.';
+    await renderFocusTimeline(recordId);
+   }catch(e){status.textContent='Error: '+e.message}
+   finally{button.disabled=false}
+  };
+ }
+ let correcting=null;
+ const now=new Date();const local=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,16);$('signalWhen').value=local;
+ for(const btn of panel.querySelectorAll('[data-correct]'))btn.onclick=()=>{
+  const original=signals.items.find(x=>x.id===btn.dataset.correct);if(!original)return;
+  correcting=original.id;$('signalKind').value=original.kind;
+  const when=new Date(original.occurred_at);$('signalWhen').value=new Date(when.getTime()-when.getTimezoneOffset()*60000).toISOString().slice(0,16);
+  $('signalDetail').value=original.detail||'';$('signalSave').textContent='Guardar corrección';$('signalMessage').textContent='Corrigiendo una señal declarada; el historial original permanecerá registrado.';
+ };
+ $('signalSave').onclick=async()=>{
+  const button=$('signalSave');button.disabled=true;
+  try{
+   const date=$('signalWhen').value;if(!date)throw Error('Indica la fecha del evento');
+   const payload={kind:$('signalKind').value,occurred_at:new Date(date).toISOString(),detail:$('signalDetail').value,idem:crypto.randomUUID()};
+   if(!correcting)payload.record_id=recordId;
+   await api(correcting?'/signals/'+encodeURIComponent(correcting)+'/correct':'/signals/reports','POST',payload);
+   await showContext(recordId,false);
+   $('signalMessage').textContent='Señal registrada con fuente y trazabilidad.';
+  }catch(e){$('signalMessage').textContent=e.message}
+  finally{button.disabled=false}
+ };
+}catch(e){msg('message',e.message)}}
+async function claim(){try{await api('/work/claim/'+selected.id,'POST');await refresh()}catch(e){msg('message',e.message)}}
+$('finish').onclick=async()=>{try{let next=$('next').value.trim(),due=$('due').value;const payload={task_id:active,idem:crypto.randomUUID(),outcome:$('result').value,note:$('note').value};if(next){payload.next_title=next;payload.next_due_at=new Date(due).toISOString()}await api('/work/complete','POST',payload);$('next').value='';$('due').value='';$('note').value='';$('finishmessage').innerHTML='';msg('message','Resultado guardado; pasando a siguiente tarea',true);await refresh()}catch(e){msg('finishmessage',e.message)}};
+$('exit').onclick=async()=>{const button=$('exit'),error=$('logoutError');button.disabled=true;error.hidden=true;error.textContent='';try{const result=await api('/auth/session','DELETE');if(result.revoked!==true)throw Error('Logout no confirmado')}catch{error.textContent='No se pudo confirmar el cierre de sesión en el servidor. Revisa tu conexión y vuelve a pulsar Cerrar sesión.';error.hidden=false;button.disabled=false;return}token='';$('login').hidden=false;$('app').hidden=true;button.disabled=false};
+</script></body></html>

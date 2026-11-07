@@ -1,0 +1,21 @@
+# EXAMPLE ONLY — not deployed, not a WAF.
+# Replace hostname and configure DNS/certificates before an authorized deployment.
+# Run Caddy on the edge; API stays bound to 127.0.0.1:8000.
+# The provider WAF/DDoS service must sit in front of this host.
+revenue.example.invalid {
+    encode zstd gzip
+    request_body {
+        max_size 10MB
+    }
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "no-referrer"
+        -Server
+    }
+    reverse_proxy 127.0.0.1:8000 {
+        header_up Host {host}
+        # Never put API or OAuth credentials in this file.
+    }
+}

@@ -1,0 +1,146 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Revenue OS · Migration Studio</title><style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:#121923;background:#f7f8fa}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}header{height:66px;background:#fff;border-bottom:1px solid #e8eaee;display:flex;align-items:center;justify-content:space-between;padding:0 32px}header b{font-size:18px;letter-spacing:-.7px}.small{font-size:12px;color:#526071}.brandmark{background:#111827;color:white;border-radius:9px;padding:8px 10px;margin-right:8px}main{max-width:1220px;margin:40px auto;padding:0 20px}h1{letter-spacing:-1.3px;font-size:32px;margin:0 0 8px;font-weight:650}h2{letter-spacing:-.5px;font-size:19px;margin:0 0 12px}.sub{color:#526071;font-size:14px;line-height:1.5}.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:22px;margin-top:30px}.sidebar,.panel{background:white;border:1px solid #e7eaef;border-radius:15px}.sidebar{padding:16px;height:max-content}.step{padding:13px;border-radius:10px;font-size:14px;color:#667085;display:flex;gap:10px}.step.active{background:#eef3ff;color:#234fca;font-weight:600}.pill{padding:4px 8px;background:#f0f2f5;border-radius:6px;font-size:11px;margin-left:auto;color:#667085}.panel{padding:26px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.field{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:550;margin:13px 0}.field input,.field select{width:100%;border:1px solid #dfe3ea;border-radius:9px;padding:11px;background:white;color:#111827;outline:none}.field input:focus,.field select:focus{border-color:#627cf0;box-shadow:0 0 0 3px #edf1ff}.upload-panel{border:1px dashed #93a8c9;padding:22px;border-radius:12px;background:#f8fbff;margin:20px 0;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:11px;overflow-wrap:anywhere}.upload-panel strong{display:block;font-size:15px}.file-input{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.file-select{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:10px 16px;border:1px solid #aabbd2;border-radius:9px;background:#fff;color:#1d355e;font-weight:650;cursor:pointer}.file-select:hover{border-color:#264bc9;background:#edf3ff}.file-input:focus-visible+.file-select{outline:3px solid #264bc9;outline-offset:3px}.file-status{font-size:13px;color:#33445c;word-break:break-word;max-width:100%}.file-status.ready{color:#14643b;font-weight:650}.field,.layout>section{min-width:0}.field input,.field select{max-width:100%}.upload-panel .small{line-height:1.5}.btn{padding:11px 16px;border:1px solid #dce2eb;border-radius:9px;background:white;color:#253041;font-size:13px;font-weight:600}.btn.primary{color:white;background:#264bc9;border-color:#264bc9}.btn.danger{color:#b42318}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #eff1f4;white-space:nowrap}th{color:#526071;font-weight:600;background:#fafbfd}td{color:#394454}table select{border:1px solid #dee3eb;border-radius:7px;padding:8px;min-width:145px;background:white}.scroll{overflow:auto;border:1px solid #edf0f4;border-radius:10px;margin:18px 0}.metric{background:#fbfcfe;padding:16px;border-radius:11px;border:1px solid #edf0f4}.metric b{font-size:23px;display:block}.muted{color:#526071}.alert{padding:12px 14px;border-radius:9px;margin:12px 0;font-size:13px;line-height:1.5;background:#fff6e7;color:#87550b}.alert.err{background:#fff1f0;color:#aa2e25}.alert.ok{background:#edf9f2;color:#176c3f}#app{display:none}.footer{font-size:12px;color:#526071;padding:28px 0}code{background:#f3f5f8;padding:2px 5px;border-radius:5px}.hidden{display:none!important}@media(max-width:760px){header{height:auto;padding:12px 16px;flex-wrap:wrap;gap:12px}header>div:last-child{flex-wrap:wrap;gap:10px!important;min-width:0}.layout{grid-template-columns:1fr}.sidebar{display:none}.panel{padding:18px}.grid{grid-template-columns:1fr}main{margin:23px auto}h1{font-size:27px}}
+</style></head><body><header><div><span class="brandmark">R</span><b>revenue<span style="color:#6d7784">OS</span></b> <span class="small" style="margin-left:12px">/ Migration Studio</span></div><div style="display:flex;gap:16px;align-items:center"><a href="/crm" style="color:#2451ba;text-decoration:none">Pipeline / Account 360</a><a href="/focus" style="color:#2451ba;text-decoration:none">Focus</a><div class="small" id="identity">Developer preview</div></div></header><main><div id="login"><h1>Importar sin empezar desde cero.</h1><p class="sub">Consolida contactos, cuentas y oportunidades desde tu CRM actual. Previsualiza, mapea y valida antes de importar.</p><form id="loginForm" class="panel" style="max-width:450px;margin-top:24px" novalidate><h2>Acceso de administrador</h2><label class="field">Usuario<input id="username" autocomplete="username" placeholder="Introduce tu usuario"></label><label class="field">Contraseña<input id="password" type="password" autocomplete="current-password" placeholder="••••••••••••"></label><label class="field">Código MFA (administradores)<input id="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6 dígitos, si se requiere"></label><button class="btn primary" id="loginBtn" type="submit">Entrar al workspace</button><div id="loginMsg" role="alert" aria-live="assertive"></div></form></div><div id="app"><h1>Migration Studio</h1><p class="sub">Una migración controlada. Ningún registro se escribe hasta que confirmes el mapeo.</p><div class="layout"><aside class="sidebar"><div class="step active" id="nav1"><span>01</span> Seleccionar archivo</div><div class="step" id="nav2"><span>02</span> Mapear campos</div><div class="step" id="nav3"><span>03</span> Validar y migrar</div><div class="step" id="nav4"><span>04</span> Historial y reversión</div><hr style="border:0;border-top:1px solid #edf0f4;margin:16px 0"><p class="small">Orden recomendado</p><div class="small" style="line-height:2">1 · Organizaciones<br>2 · Contactos<br>3 · Negocios<br>4 · Actividades</div><button class="btn" style="margin-top:18px" id="logout">Salir</button><div id="logoutError" role="alert" style="color:#b42318;margin-top:8px" hidden></div></aside><section><div class="panel" id="step1"><h2>Selecciona el origen</h2><p class="sub">Admite archivos CSV y XLSX exportados desde Pipedrive, HubSpot, Salesforce, Google Sheets y otros proveedores.</p><div class="grid"><label class="field">Entidad<select id="kind"><option value="companies">Organizaciones</option><option value="contacts">Contactos</option><option value="deals">Oportunidades</option><option value="activities">Actividades</option></select></label><label class="field">Proveedor de origen<input id="source" value="pipedrive" placeholder="pipedrive"></label></div><div class="upload-panel"><strong>1. Elige un archivo de importación</strong><span class="small" id="fileHelp">CSV o XLSX · máximo 8 MB y 10.000 filas. Seleccionar no importa registros.</span><input type="file" id="file" class="file-input" accept=".csv,.xlsx" aria-describedby="fileHelp fileStatus"><label for="file" class="file-select">Seleccionar archivo CSV/XLSX</label><div class="file-status" id="fileStatus" role="status" aria-live="polite">Todavía no has seleccionado ningún archivo.</div></div><div class="controls"><button id="analyze" class="btn primary">Analizar archivo</button><button id="openHistory" class="btn" type="button">Ver historial y revertir importaciones</button><span class="small">No modifica tus registros existentes</span></div><div id="msg1" role="status" aria-live="polite"></div></div><div class="panel hidden" id="step2"><h2>Mapeo inteligente de columnas</h2><p class="sub">Revisa las coincidencias propuestas. Los campos no mapeados se preservan como atributos adicionales.</p><div class="grid"><div class="metric"><span class="small">Registros detectados</span><b id="total">0</b></div><div class="metric"><span class="small">Columnas originales</span><b id="columns">0</b></div></div><div class="scroll"><table><thead><tr><th>Campo Revenue OS</th><th>Columna de origen</th></tr></thead><tbody id="mapping"></tbody></table></div><div class="controls"><button class="btn primary" id="continue">Revisar datos</button><button class="btn" id="back1">Cambiar archivo</button></div><div id="msg2" role="status" aria-live="polite"></div></div><div class="panel hidden" id="step3"><h2>Última comprobación</h2><p class="sub">Comprueba que IDs, relaciones y estados sean correctos. Los IDs de origen evitan duplicados al repetir una migración.</p><div id="reviewSummary" class="alert" role="status"></div><div class="scroll"><table id="previewTable"></table></div><div class="field">Si el ID ya existe<select id="strategy"><option value="skip">Omitir (más seguro)</option><option value="upsert">Actualizar con datos del archivo</option></select></div><div class="alert">Importación atómica: si se encuentra un error de validación, el lote completo se cancela. No se envían mensajes ni se ejecutan automatizaciones.</div><div class="controls"><button class="btn primary" id="commit">Confirmar importación</button><button class="btn" id="back2">Modificar mapeo</button></div><div id="msg3" role="status" aria-live="polite"></div></div><div class="panel hidden" id="step4"><h2>Historial de migraciones</h2><div id="importResult" class="alert ok" role="status" aria-live="polite" hidden></div><p class="sub">Todos los lotes se asocian a tu empresa. Puedes revertir un lote si no se ha modificado por cargas posteriores.</p><div class="grid" id="metrics"></div><div class="controls"><label><input id="selectAllBatches" type="checkbox"> Seleccionar todos los lotes visibles</label><button class="btn danger" id="rollbackSelected" type="button" disabled>Revertir seleccionados</button></div><div id="rollbackStatus" role="status" aria-live="polite"></div><div class="scroll"><table><thead><tr><th>Origen</th><th>Entidad</th><th>Creados</th><th>Actualizados</th><th>Estado</th><th></th></tr></thead><tbody id="history"></tbody></table></div><section aria-labelledby="reconcileTitle" style="margin:24px 0;padding:20px;border:1px solid #dce5f0;border-radius:12px;background:#f9fbfe"><h3 id="reconcileTitle">Reconciliar relaciones entre registros</h3><p class="sub">Previsualiza vínculos entre empresas, contactos, oportunidades y actividades. Los datos no se modifican hasta que confirmes.</p><label class="field" for="reconcileSource">Proveedor de la importación<input id="reconcileSource" value="pipedrive" autocomplete="off"></label><div class="controls"><button class="btn" type="button" id="previewRelations">Revisar relaciones</button><button class="btn primary" type="button" id="applyRelations" disabled>Confirmar reconciliación</button></div><div id="relationsMessage" role="status" aria-live="polite"></div><div id="relationReport" hidden><p id="relationSummary" class="sub"></p><h4>Referencias pendientes</h4><ul id="relationMissing"></ul></div></section><button class="btn" id="newMigration">Nueva importación</button><div id="msg4" role="status" aria-live="polite"></div></div></section></div><p class="footer">Revenue OS · v1.1 developer preview. No importar datos personales reales hasta completar despliegue y revisión de seguridad.</p></div></main><script>
+let token='',file=null,analysis=null,relationPreview=null,relationBusy=false,importBatches=[],rollbackBusy=false;const $=id=>document.getElementById(id);const API='/api/v1';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const notice=(id,message,type='err')=>{$(id).innerHTML=`<div class="alert ${type}">${esc(message)}</div>`};
+async function req(path,options={}){let headers={...(options.headers||{})};if(token)headers.Authorization='Bearer '+token;let r;try{r=await fetch(API+path,{...options,headers})}catch{throw Error('Sin conexión con el servidor. Revisa tu red y vuelve a intentarlo.')}let data;try{data=await r.json()}catch{data={detail:'Respuesta inválida'}};if(!r.ok)throw Error(typeof data.detail==='string'?data.detail:typeof data.detail==='object'?'Revisa los campos introducidos e inténtalo de nuevo.':'No se pudo completar la solicitud');return data}
+function show(n){for(let i=1;i<=4;i++){const active=i===n;$('step'+i).classList.toggle('hidden',!active);$('nav'+i).classList.toggle('active',active);if(active)$('nav'+i).setAttribute('aria-current','step');else $('nav'+i).removeAttribute('aria-current')}}
+$('loginForm').onsubmit=async event=>{event.preventDefault();const username=$('username').value.trim(),password=$('password').value;if(!username){notice('loginMsg','Introduce tu usuario.');$('username').focus();return}if(!password){notice('loginMsg','Introduce tu contraseña.');$('password').focus();return}const button=$('loginBtn');button.disabled=true;try{const result=await req('/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password,...($('otp').value.trim()?{otp:$('otp').value.trim()}:{})})});if(result.role!=='admin')throw Error('Requiere perfil administrador');token=result.access_token;$('loginMsg').replaceChildren();$('login').hidden=true;$('app').style.display='block';$('identity').textContent='Workspace '+result.tenant+' · Administrador';show(1)}catch(e){notice('loginMsg',e.message==='Credenciales inválidas'?'Credenciales o código MFA inválidos.':e.message)}finally{button.disabled=false}};
+$('openHistory').onclick=async()=>{try{await history();show(4)}catch(e){notice('msg1','No se pudo cargar el historial: '+e.message)}};
+$('logout').onclick=async()=>{const button=$('logout'),error=$('logoutError');button.disabled=true;error.hidden=true;error.textContent='';try{const result=await req('/auth/session',{method:'DELETE'});if(result.revoked!==true)throw Error('Logout no confirmado')}catch{error.textContent='No se pudo confirmar el cierre de sesión en el servidor. Comprueba la conexión y vuelve a pulsar Salir.';error.hidden=false;button.disabled=false;return}token='';$('app').style.display='none';$('login').hidden=false;button.disabled=false};
+function selectedFile(){
+ const input=$('file');const chosen=input.files[0];file=null;analysis=null;$('msg1').replaceChildren();
+ const status=$('fileStatus');status.className='file-status';
+ if(!chosen){status.textContent='Todavía no has seleccionado ningún archivo.';return}
+ const size=(chosen.size/1024).toLocaleString('es-ES',{maximumFractionDigits:1});
+ const expected={'01_organizaciones.csv':'companies','02_contactos.csv':'contacts','03_oportunidades.csv':'deals','04_actividades.csv':'activities'}[chosen.name.toLowerCase()];
+ if(expected&&expected!==$('kind').value){
+  status.textContent='Entidad incorrecta: selecciona '+({companies:'Organizaciones',contacts:'Contactos',deals:'Oportunidades',activities:'Actividades'}[expected])+' para '+chosen.name+'.';
+  notice('msg1',status.textContent);
+  return;
+ }
+ if(!/\.(csv|xlsx)$/i.test(chosen.name)){status.textContent='Formato no admitido: selecciona CSV o XLSX.';return}
+ if(!chosen.size || chosen.size>8*1024*1024){status.textContent='Tamaño no permitido: el archivo debe ocupar entre 1 byte y 8 MB.';return}
+ file=chosen;status.textContent='Seleccionado: '+chosen.name+' ('+size+' KB). Pendiente de analizar; todavía no importado.';status.className='file-status ready';
+}
+$('file').addEventListener('change',selectedFile);
+$('kind').addEventListener('change',()=>{analysis=null;$('msg1').replaceChildren();});
+$('source').addEventListener('input',()=>{$('msg1').replaceChildren()});
+$('analyze').onclick=async()=>{
+ selectedFile();if(!file){notice('msg1','Selecciona un CSV o XLSX válido antes de analizar.');return}
+ const button=$('analyze');button.disabled=true;$('fileStatus').textContent='Analizando '+file.name+'…';
+ const f=new FormData;f.append('file',file);f.append('kind',$('kind').value);
+ try{
+  analysis=await req('/migrations/preview',{method:'POST',body:f});
+  $('total').textContent=analysis.total_rows;$('columns').textContent=analysis.columns.length;
+  const fields=['external_id','name','email','phone','company_external_id','contact_external_id','stage','owner','amount','due_at'];
+  $('mapping').innerHTML=fields.map(k=>`<tr><td>${esc(k)} ${['external_id','name'].includes(k)?'<strong>*</strong>':''}</td><td><select aria-label="Columna de origen para ${esc(k)}" data-field="${k}"><option value="">No mapear</option>${analysis.columns.map(h=>`<option value="${esc(h)}" ${analysis.suggested_mapping[k]===h?'selected':''}>${esc(h)}</option>`).join('')}</select></td></tr>`).join('');
+  $('fileStatus').textContent='Analizado: '+file.name+' · '+analysis.total_rows+' filas. Sin cambios en la base de datos.';
+  show(2);
+ }catch(e){analysis=null;$('fileStatus').textContent='Error al analizar '+file.name;notice('msg1',e.message)}
+ finally{button.disabled=false}
+};
+$('continue').onclick=()=>{const map={};for(const s of $('mapping').querySelectorAll('select'))if(s.value)map[s.dataset.field]=s.value;if(!map.name||!map.external_id){notice('msg2','Mapea al menos name y external_id');return}const used=Object.values(map);if(new Set(used).size!==used.length){notice('msg2','No reutilices una columna en dos campos');return}analysis.mapping=map;$('reviewSummary').textContent='Entidad: '+$('kind').selectedOptions[0].textContent+' · Archivo: '+file.name+' · '+analysis.total_rows+' registros · Origen: '+$('source').value.trim()+' · Todavía sin importar.';const keys=analysis.columns.slice(0,8);$('previewTable').innerHTML='<thead><tr>'+keys.map(k=>`<th>${esc(k)}</th>`).join('')+'</tr></thead><tbody>'+analysis.preview.map(r=>'<tr>'+keys.map(k=>`<td>${esc(r[k])}</td>`).join('')+'</tr>').join('')+'</tbody>';show(3)};
+$('commit').onclick=async()=>{
+ if(!analysis||!file){notice('msg3','Debes analizar el archivo de nuevo.');return}
+ const model={kind:$('kind').value,source:$('source').value.trim(),columns:analysis.mapping,strategy:$('strategy').value,digest:analysis.digest};
+ if(!/^[a-zA-Z0-9_-]{2,80}$/.test(model.source)){notice('msg3','Proveedor de origen inválido (2–80 letras, números, guiones o guiones bajos).');return}
+ const f=new FormData;f.append('file',file);f.append('spec',JSON.stringify(model));
+ const button=$('commit');button.disabled=true;notice('msg3','Importando y guardando registros; no cierres esta pestaña.','');
+ let result;
+ try{result=await req('/migrations/commit',{method:'POST',body:f})}
+ catch(e){notice('msg3',e.message);button.disabled=false;return}
+ button.disabled=false;
+ const completed='Importación confirmada: '+result.created+' creados, '+result.updated+' actualizados y '+result.skipped+' omitidos. Guardados en PostgreSQL.';
+ notice('msg3',completed,'ok');$('importResult').textContent=completed;$('importResult').hidden=false;
+ $('reconcileSource').value=model.source;resetRelations();show(4);
+ try{await history()}catch(e){notice('msg4','Los datos se guardaron, pero no se pudo actualizar el historial: '+e.message)}
+};
+async function history(){const [rows,summary]=await Promise.all([req('/migrations/batches'),req('/migrations/summary')]);importBatches=rows;$('metrics').innerHTML=Object.entries(summary).map(([k,v])=>`<div class="metric"><span class="small">${esc(k)}</span><b>${v}</b></div>`).join('');$('history').innerHTML=rows.map(r=>`<tr><td>${esc(r.source)}</td><td>${esc(r.kind)}</td><td>${r.created}</td><td>${r.updated}</td><td>${esc(r.status)}</td><td>${r.status==='complete'?`<label class="small"><input class="batch-check" type="checkbox" data-batch="${esc(r.id)}"> Seleccionar</label> <button class="btn danger" type="button" data-rollback="${esc(r.id)}">Revertir</button>`:'Revertido'}</td></tr>`).join('');$('selectAllBatches').checked=false;
+ $('selectAllBatches').disabled=rollbackBusy||!rows.some(r=>r.status==='complete');
+ $('rollbackSelected').disabled=true;
+ const refreshSelection=()=>{
+  $('rollbackSelected').disabled=rollbackBusy||!$('history').querySelector('.batch-check:checked');
+ };
+ for(const checkbox of $('history').querySelectorAll('.batch-check'))checkbox.onchange=refreshSelection;
+ $('selectAllBatches').onchange=()=>{
+  for(const checkbox of $('history').querySelectorAll('.batch-check'))checkbox.checked=$('selectAllBatches').checked;
+  refreshSelection();
+ };
+ $('rollbackSelected').onclick=()=>{
+  const selected=new Set([...$('history').querySelectorAll('.batch-check:checked')].map(x=>x.dataset.batch));
+  rollbackSelectedBatches(importBatches.filter(x=>selected.has(x.id)));
+ };
+ for(const btn of $('history').querySelectorAll('[data-rollback]'))
+  btn.onclick=()=>rollbackSelectedBatches([importBatches.find(x=>x.id===btn.dataset.rollback)]);
+}
+
+
+async function rollbackSelectedBatches(rows){
+ if(rollbackBusy||!rows.length)return;
+ const count=rows.reduce((n,r)=>n+r.created,0);
+ if(!confirm('¿Revertir '+rows.length+' lote(s), con '+count+' registros creados? No se eliminarán usuarios ni etapas.'))return;
+ rollbackBusy=true;
+ for(const control of $('step4').querySelectorAll('#rollbackSelected,#selectAllBatches,[data-rollback],.batch-check'))control.disabled=true;
+ let done=0,error='';
+ for(const row of rows){
+  notice('rollbackStatus','Revirtiendo '+(done+1)+' de '+rows.length+': '+row.source+' / '+row.kind,'');
+  $('rollbackStatus').scrollIntoView({block:'center',behavior:'smooth'});
+  try{
+   await req('/migrations/'+encodeURIComponent(row.id)+'/rollback',{method:'POST'});
+   done++;
+  }catch(e){error='Error en '+row.source+' / '+row.kind+': '+e.message;break}
+ }
+ rollbackBusy=false;
+ try{await history()}catch(e){
+  notice('rollbackStatus',done+' lotes procesados; no se pudo actualizar el historial: '+e.message);
+  return;
+ }
+ notice('rollbackStatus',done+' de '+rows.length+' lotes revertidos. '+(error||'Comprueba los contadores antes de importar de nuevo.'),error?'err':'ok');
+}
+
+function resetRelations(){relationPreview=null;$('applyRelations').disabled=true;$('relationReport').hidden=true;$('relationMissing').replaceChildren();$('relationsMessage').textContent=''}
+function relationFeedback(text,error=false){const out=$('relationsMessage');out.textContent=text;out.className=error?'alert err':'alert ok'}
+function relationSource(){const value=$('reconcileSource').value.trim();if(!/^[A-Za-z0-9_-]{2,80}$/.test(value))throw Error('Proveedor inválido: introduce 2–80 letras, números, guiones o guiones bajos');return value}
+function renderRelationReport(report){
+ $('relationReport').hidden=false;
+ $('relationSummary').textContent='Referencias resolubles: '+report.resolved_references+' · Pendientes: '+report.unresolved_count+' · Vista previa sin modificar registros.';
+ const list=$('relationMissing');list.replaceChildren();
+ for(const item of report.unresolved){const li=document.createElement('li');li.textContent=item.kind+' '+item.external_id+' · '+item.field+' → '+item.missing_reference;list.append(li)}
+ if(!report.unresolved_count){const li=document.createElement('li');li.textContent='Ninguna referencia pendiente';list.append(li)}
+ if(report.unresolved_count>report.unresolved.length){const li=document.createElement('li');li.textContent='Informe limitado a las primeras '+report.unresolved.length+' referencias';list.append(li)}
+}
+$('reconcileSource').addEventListener('input',resetRelations);
+$('previewRelations').onclick=async()=>{
+ if(relationBusy)return;
+ relationBusy=true;$('previewRelations').disabled=true;$('applyRelations').disabled=true;
+ try{
+  const source=relationSource();
+  const report=await req('/migrations/relationships?source='+encodeURIComponent(source));
+  relationPreview={source,report};renderRelationReport(report);
+  relationFeedback('Vista previa lista. Comprueba las referencias antes de confirmar.');
+  $('applyRelations').disabled=false;
+ }catch(e){resetRelations();relationFeedback(e.message,true)}
+ finally{relationBusy=false;$('previewRelations').disabled=false}
+};
+$('applyRelations').onclick=async()=>{
+ if(relationBusy||!relationPreview)return;
+ relationBusy=true;$('applyRelations').disabled=true;$('previewRelations').disabled=true;
+ try{
+  const {source,report}=relationPreview;
+  if(relationSource()!==source)throw Error('El proveedor ha cambiado. Revisa las relaciones de nuevo.');
+  const fresh=await req('/migrations/relationships?source='+encodeURIComponent(source));
+  const comparable=d=>JSON.stringify([d.resolved_references,d.unresolved_count,d.unresolved]);
+  if(comparable(fresh)!==comparable(report))throw Error('Las referencias han cambiado. Previsualiza de nuevo antes de confirmar.');
+  const applied=await req('/migrations/relationships/reconcile?source='+encodeURIComponent(source),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({expected_snapshot:report.snapshot_sha256})});
+  relationPreview=null;
+  relationFeedback('Reconciliación registrada · Creados: '+applied.links_created+' · Actualizados: '+applied.links_updated+' · Retirados: '+applied.links_removed+' · Pendientes: '+applied.unresolved_count);
+  $('relationSummary').textContent='Resultado persistido; referencias pendientes: '+applied.unresolved_count;
+  await history();
+ }catch(e){relationPreview=null;relationFeedback(e.message,true)}
+ finally{relationBusy=false;$('previewRelations').disabled=false;$('applyRelations').disabled=true}
+};
+
+$('newMigration').onclick=()=>{resetRelations();$('file').value='';selectedFile();$('importResult').hidden=true;$('msg3').replaceChildren();$('msg4').replaceChildren();show(1)};$('back1').onclick=()=>show(1);$('back2').onclick=()=>show(2);
+</script></body></html>

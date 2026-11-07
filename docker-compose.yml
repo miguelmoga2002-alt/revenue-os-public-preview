@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: revenue
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: revenue_os
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U revenue -d revenue_os"]
+      interval: 5s
+      retries: 10
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  migrate:
+    build: .
+    environment:
+      REVENUE_OS_DATABASE_URL: postgresql+psycopg://revenue:${POSTGRES_PASSWORD}@postgres:5432/revenue_os
+      REVENUE_OS_APP_DB_PASSWORD: ${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}
+      REVENUE_OS_MFA_ENCRYPTION_KEY: ${REVENUE_OS_MFA_ENCRYPTION_KEY:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["sh", "-c", "alembic upgrade head && python scripts/provision_app_role.py"]
+    restart: "no"
+
+  app:
+    build: .
+    environment:
+      REVENUE_OS_DATABASE_URL: postgresql+psycopg://revenue_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/revenue_os
+      REVENUE_OS_MFA_ENCRYPTION_KEY: ${REVENUE_OS_MFA_ENCRYPTION_KEY:-}
+      REVENUE_OS_REQUIRE_ADMIN_MFA: ${REVENUE_OS_REQUIRE_ADMIN_MFA:-1}
+      REVENUE_OS_ENABLE_PIPEDRIVE_SYNC: ${REVENUE_OS_ENABLE_PIPEDRIVE_SYNC:-0}
+      REVENUE_OS_PIPEDRIVE_CONNECTIONS_JSON: ${REVENUE_OS_PIPEDRIVE_CONNECTIONS_JSON:-}
+      REVENUE_OS_ENABLE_CRM_OAUTH: ${REVENUE_OS_ENABLE_CRM_OAUTH:-0}
+      REVENUE_OS_PUBLIC_ORIGIN: ${REVENUE_OS_PUBLIC_ORIGIN:-}
+      REVENUE_OS_ENV: ${REVENUE_OS_ENV:-development}
+      REVENUE_OS_OAUTH_ENCRYPTION_KEY: ${REVENUE_OS_OAUTH_ENCRYPTION_KEY:-}
+      REVENUE_OS_OAUTH_CALLBACK_URL: ${REVENUE_OS_OAUTH_CALLBACK_URL:-}
+      REVENUE_OS_HUBSPOT_CLIENT_ID: ${REVENUE_OS_HUBSPOT_CLIENT_ID:-}
+      REVENUE_OS_HUBSPOT_CLIENT_SECRET: ${REVENUE_OS_HUBSPOT_CLIENT_SECRET:-}
+      REVENUE_OS_SALESFORCE_CLIENT_ID: ${REVENUE_OS_SALESFORCE_CLIENT_ID:-}
+      REVENUE_OS_SALESFORCE_CLIENT_SECRET: ${REVENUE_OS_SALESFORCE_CLIENT_SECRET:-}
+      REVENUE_OS_PIPEDRIVE_CLIENT_ID: ${REVENUE_OS_PIPEDRIVE_CLIENT_ID:-}
+      REVENUE_OS_PIPEDRIVE_CLIENT_SECRET: ${REVENUE_OS_PIPEDRIVE_CLIENT_SECRET:-}
+    ports:
+      - "127.0.0.1:8000:8000"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,noexec,size=32m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+volumes:
+  pgdata:
