@@ -2,7 +2,7 @@
 
 [![Public Preview CI](https://github.com/miguelmoga2002-alt/revenue-os-public-preview/actions/workflows/ci.yml/badge.svg)](https://github.com/miguelmoga2002-alt/revenue-os-public-preview/actions/workflows/ci.yml)
 
-**Public Technical Preview** · `1.1.0-rc.1` · B2B Sales Operating System
+**Public Technical Preview** · `1.1.0-rc.1` · Sales Operating System for B2B and B2C teams
 
 Deterministic sales execution platform built around pipeline management, account intelligence, task prioritization and auditable commercial workflows.
 
@@ -10,9 +10,9 @@ Deterministic sales execution platform built around pipeline management, account
 
 ## Why I built this
 
-I've spent four years as a full-cycle Account Executive, and I know where a rep's day goes: updating the CRM instead of following up. I'm building Revenue OS as the sales system for our two family businesses, an aluminium carpentry company and an industrial machinery and real estate business: one place that says what to do next and keeps every deal traceable.
+I've spent four years as a full-cycle Account Executive, and I know where a rep's day goes: updating the CRM instead of following up. I'm building Revenue OS as the sales system for our two family businesses, an aluminium carpentry company and an industrial machinery and real estate business: one place that says what to do next and keeps every deal traceable. The goal is one system where calls, transcripts, emails and notes sit next to the pipeline, so a rep gets back 20-30% of the time that admin takes today. This preview covers the core; AI and telephony are on the roadmap.
 
-I designed the product, its rules and its architecture, and I write the code with AI assistants under a test-first, verify-before-done protocol. Next, I want to know whether other B2B sales teams have the same problem, so I'm talking to sales leaders (see section 06).
+I designed the product, its rules and its architecture, and I write the code with AI assistants under a test-first, verify-before-done protocol. Next, I want to know whether other sales teams, B2B and B2C, have the same problem, so I'm talking to sales leaders (see section 06).
 
 ## 01. Technical Overview
 
@@ -331,12 +331,12 @@ PostgreSQL integration tests require an isolated database and the test configura
 
 Development priorities are tied to product validation, integration reliability and measurable commercial outcomes.
 
-- **ICP Validation:** Interview Spanish B2B sales teams with 10–50 representatives. Validate administrative bottlenecks, CRM adoption friction and willingness to pay.
+- **ICP Validation:** Interview Spanish B2B and B2C sales teams with 10–50 representatives. Validate administrative bottlenecks, CRM adoption friction and willingness to pay.
 - **Sandbox Integrations:** Validate one CRM connector first, followed by permissioned email/calendar ingestion and Slack workflows. Require reliable synchronization, deduplication and audit trails.
 - **Deterministic Decision Intelligence:** Retain explicit, explainable business rules as the authoritative decision layer. Evaluate future LLM-assisted signals using source attribution, timestamps, confidence metadata and strict human-in-the-loop validation.
 - **Follow-up Automation:** Introduce evidence-grounded message drafts with mandatory human approval before external delivery.
 - **Operational Readiness:** Verify tenant isolation, backup restoration, security controls, observability and legal requirements before customer-data pilots.
-- **Commercial Validation:** Measure administrative minutes per lead, time to follow-up, recommendation acceptance, CRM data completeness and weekly product adoption.
+- **Commercial Validation:** Measure administrative minutes per lead (target: 20-30% less admin time per rep), time to follow-up, recommendation acceptance, CRM data completeness and weekly product adoption.
 
 ### AI Integration Policy
 
@@ -350,7 +350,7 @@ Every LLM-assisted workflow must support source traceability, evaluation and hum
 
 ## 06. Feedback & Contributions
 
-Revenue OS is looking for **Spanish B2B sales teams with 10–50 sales representatives** interested in product discovery interviews and technical demonstrations using synthetic data.
+Revenue OS is looking for **Spanish sales teams, B2B or B2C, with 10–50 sales representatives** interested in product discovery interviews and technical demonstrations using synthetic data.
 
 The objective is to validate actual sales workflows, CRM administration overhead and the operational value of deterministic next-action recommendations.
 
@@ -361,7 +361,7 @@ Relevant profiles include:
 - Sales Managers and Heads of Sales.
 - Revenue Operations teams.
 - SDR / BDR and Account Executive teams.
-- B2B organizations with established CRM workflows.
+- B2B and B2C sales organizations with established CRM workflows.
 
 To request a conversation, [open a GitHub Issue](https://github.com/miguelmoga2002-alt/revenue-os-public-preview/issues/new) with the title:
 
