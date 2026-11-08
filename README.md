@@ -1,10 +1,18 @@
 # Revenue OS
 
+[![Public Preview CI](https://github.com/miguelmoga2002-alt/revenue-os-public-preview/actions/workflows/ci.yml/badge.svg)](https://github.com/miguelmoga2002-alt/revenue-os-public-preview/actions/workflows/ci.yml)
+
 **Public Technical Preview** · `1.1.0-rc.1` · B2B Sales Operating System
 
 Deterministic sales execution platform built around pipeline management, account intelligence, task prioritization and auditable commercial workflows.
 
 > **Release status:** Laboratory release candidate. Validated with synthetic data. Not approved for production deployment or customer-data pilots.
+
+## Why I built this
+
+I've spent four years as a full-cycle Account Executive, and I know where a rep's day goes: updating the CRM instead of following up. I'm building Revenue OS as the sales system for our two family businesses, an aluminium carpentry company and an industrial machinery and real estate business: one place that says what to do next and keeps every deal traceable.
+
+I designed the product, its rules and its architecture, and I write the code with AI assistants under a test-first, verify-before-done protocol. Next, I want to know whether other B2B sales teams have the same problem, so I'm talking to sales leaders (see section 06).
 
 ## 01. Technical Overview
 
@@ -357,7 +365,7 @@ Relevant profiles include:
 
 To request a conversation, [open a GitHub Issue](https://github.com/miguelmoga2002-alt/revenue-os-public-preview/issues/new) with the title:
 
-`Design partner - interés`
+`Design partner`
 
 Describe your sales workflow, current CRM stack and primary operational bottlenecks.
 
@@ -392,3 +400,7 @@ Public access to this repository does not grant rights to redistribute, sublicen
 **Release Notes:** [PUBLIC_RELEASE_NOTES.md](PUBLIC_RELEASE_NOTES.md)
 
 **Intended Use:** Local evaluation, architectural review and product discovery using synthetic data only.
+
+---
+
+Built by [Miguel Morales García](https://miguelmoralesgarcia.es). More projects: [automation-portfolio](https://github.com/miguelmoga2002-alt/automation-portfolio).
